@@ -5,17 +5,17 @@ def apply_theme():
     try:
         # Set the page configuration only once
         st.set_page_config(
-            page_title="Enhanced Streamlit Demo",   # Set the page title
-            page_icon="🌟",                        # Set the page icon
-            layout="wide",                         # Set the layout to wide
-            initial_sidebar_state="expanded",      # Expand the sidebar by default
+            page_title="Professional Streamlit App",   # Set the page title
+            page_icon="🚀",                         # Set the page icon
+            layout="wide",                          # Set the layout to wide
+            initial_sidebar_state="expanded",       # Expand the sidebar by default
             theme={
-                "base": "dark",                  # Use dark theme
-                "primaryColor": "#FFA421",      # Set the primary color
-                "backgroundColor": "#1E1E1E",   # Set the background color
+                "base": "dark",                    # Use dark theme
+                "primaryColor": "#FFA421",         # Set the primary color
+                "backgroundColor": "#1E1E1E",      # Set the background color
                 "secondaryBackgroundColor": "#282828",  # Set the secondary background color
-                "textColor": "#FFFFFF",         # Set the text color to white
-                "font": "sans serif"            # Set the font to sans-serif
+                "textColor": "#FFFFFF",            # Set the text color to white
+                "font": "sans serif"               # Set the font to sans-serif
             }
         )
         print("Page configuration applied successfully.")
@@ -29,31 +29,80 @@ apply_theme()
 # Sidebar with navigation options, styled with CSS
 sidebar = st.sidebar
 
-# Custom CSS to style the sidebar buttons
+# Custom CSS to style the sidebar buttons and overall layout
 sidebar.markdown("""
     <style>
-        .stSidebar .css-1d391kg {
-            border: none;
-            background-color: #1E1E1E;
+        /* Style the sidebar itself */
+        .stSidebar {
+            background-color: #282828;  /* Dark background for the sidebar */
+            border-radius: 12px;        /* Rounded corners for a sleek look */
+            padding: 20px;              /* Add padding around the content */
         }
-        .stSidebar .st-bd {
-            border-radius: 8px;
+
+        /* Style the sidebar heading */
+        .stSidebar h1 {
+            font-size: 24px;
+            color: #FFA421;
+            text-align: center;
+            font-weight: bold;
+            margin-bottom: 20px;
         }
+
+        /* Style the buttons (radio options) */
         .stSidebar .stRadio label {
             font-size: 18px;
-            font-weight: bold;
+            font-weight: 600;         /* Slightly lighter weight for readability */
             text-align: center;
             background-color: #FFA421;
             color: #FFFFFF;
-            padding: 10px;
+            padding: 15px 20px;
             border-radius: 10px;
-            width: 250px;
-            margin: 5px auto;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            width: 100%;              /* Make buttons stretch full width */
+            margin: 10px 0;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             cursor: pointer;
+            transition: all 0.3s ease;
         }
+
+        /* Button hover effect */
         .stSidebar .stRadio label:hover {
             background-color: #FF6F00;
+            transform: scale(1.05);
+        }
+
+        /* Style the selected button */
+        .stSidebar .stRadio label.st-active {
+            background-color: #FF6F00;
+            font-weight: 700;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Style the page content area */
+        .stMain {
+            background-color: #1E1E1E;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.4);
+        }
+
+        /* Style the content headers */
+        .stMain h1 {
+            font-size: 28px;
+            color: #FFA421;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        /* Style the content text */
+        .stMain p {
+            font-size: 16px;
+            color: #FFFFFF;
+            line-height: 1.6;
+        }
+
+        /* Style the subpage buttons */
+        .stSidebar .stRadio .st-bd {
+            padding: 10px;
         }
     </style>
 """, unsafe_allow_html=True)
@@ -85,38 +134,39 @@ selected_subpage = sidebar.radio(
 if selected_page == "🏠 Home":
     if selected_subpage == "Getting Started 🛠️":
         st.title("🏠 Home - Getting Started")
-        st.write("Details about how to get started.")
+        st.write("Welcome to the Getting Started guide. This section will help you set up and use the app effectively.")
     elif selected_subpage == "Overview 🌟":
         st.title("🏠 Home - Overview")
-        st.write("Overview of the application.")
+        st.write("Overview of the application, its features, and how it can help you achieve your goals.")
 elif selected_page == "📈 Analytics":
     if selected_subpage == "Charts 📊":
         st.title("📈 Analytics - Charts")
-        st.write("Details about analytics charts.")
+        st.write("Explore the charts and analytics related to your data. Visualize trends and insights.")
     elif selected_subpage == "Insights 🔍":
         st.title("📈 Analytics - Insights")
-        st.write("Details about analytics insights.")
+        st.write("Dive into deeper insights and learn how your data drives decisions.")
 elif selected_page == "📂 Reports":
     if selected_subpage == "Create 📄":
         st.title("📂 Reports - Create")
-        st.write("Details about creating reports.")
+        st.write("Learn how to create custom reports tailored to your needs.")
     elif selected_subpage == "Manage 🗂️":
         st.title("📂 Reports - Manage")
-        st.write("Details about managing reports.")
+        st.write("Manage and organize your reports in an efficient and effective manner.")
 elif selected_page == "⚙️ Settings":
     if selected_subpage == "Preferences ⚙️":
         st.title("⚙️ Settings - Preferences")
-        st.write("Details about preferences.")
+        st.write("Adjust your personal preferences and settings to tailor the app to your needs.")
     elif selected_subpage == "Tools 🔧":
         st.title("⚙️ Settings - Tools")
-        st.write("Details about settings tools.")
+        st.write("Explore the various tools available for advanced users and developers.")
 elif selected_page == "📜 About":
     if selected_subpage == "Credits 📜":
         st.title("📜 About - Credits")
-        st.write("Details about the app credits.")
+        st.write("Acknowledgements and credits for the developers and contributors to this project.")
     elif selected_subpage == "Features 🌟":
         st.title("📜 About - Features")
-        st.write("Details about the app features.")
+        st.write("Detailed list of features and functionality available in the app.")
+
 
 
 
