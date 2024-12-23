@@ -1,5 +1,5 @@
 import streamlit as st
-from streamlit.components.v1 import html
+from streamlit_option_menu import option_menu  # Importing streamlit-option-menu
 
 # Function to apply the theme and page configuration
 def apply_theme():
@@ -63,7 +63,7 @@ sidebar.markdown("""
             margin-bottom: 20px;
         }
 
-        /* Style the buttons (radio options) */
+        /* Style the option menu buttons */
         .stSidebar .stRadio label {
             font-size: 18px;
             font-weight: 600;         /* Slightly lighter weight for readability */
@@ -122,65 +122,120 @@ sidebar.markdown("""
     </style>
 """, unsafe_allow_html=True)
 
-# Sidebar navigation
-selected_page = sidebar.radio(
-    "Select a page", 
-    ["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"],
-    label_visibility="collapsed"
+# Sidebar navigation using option_menu for pages
+selected_page = option_menu(
+    menu_title="Main Menu",   # The main menu title
+    options=["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"],  # Main pages
+    icons=["house", "bar-chart", "file-earmark-text", "gear", "info-circle"],  # Icons for the pages
+    menu_icon="cast",  # Main menu icon
+    default_index=0,  # Default to Home page
+    orientation="vertical",  # Arrange menu vertically
+    styles={
+        "container": {"padding": "5px", "background-color": "#282828"},
+        "icon": {"color": "#FFA421", "font-size": "18px"},
+        "menu-title": {"font-size": "22px", "font-weight": "bold", "color": "#FFA421"},
+        "nav-link": {
+            "font-size": "18px",
+            "font-weight": "600",
+            "text-align": "center",
+            "background-color": "#FFA421",
+            "color": "#FFFFFF",
+            "border-radius": "10px",
+            "padding": "12px",
+            "box-shadow": "0 4px 10px rgba(0, 0, 0, 0.3)",
+        },
+        "nav-link-selected": {"background-color": "#FF6F00", "font-weight": "700"}
+    }
 )
 
-# Dictionary to hold subpages for each page
-subpages = {
-    "🏠 Home": ["Getting Started 🛠️", "Overview 🌟"],
-    "📈 Analytics": ["Charts 📊", "Insights 🔍"],
-    "📂 Reports": ["Create 📄", "Manage 🗂️"],
-    "⚙️ Settings": ["Preferences ⚙️", "Tools 🔧"],
-    "📜 About": ["Credits 📜", "Features 🌟"]
-}
-
-# Sidebar subpage selection
-selected_subpage = sidebar.radio(
-    "Select a subpage", 
-    subpages[selected_page],
-    label_visibility="collapsed"
-)
-
-# Content display based on the selected page and subpage
+# Subpage navigation using option_menu based on the selected page
 if selected_page == "🏠 Home":
-    if selected_subpage == "Getting Started 🛠️":
+    subpage = option_menu(
+        menu_title="Home Subpages",  
+        options=["Getting Started 🛠️", "Overview 🌟"],
+        icons=["wrench", "star"],
+        menu_icon="house",
+        default_index=0,
+        orientation="horizontal",
+        styles={
+            "container": {"padding": "5px", "background-color": "#1E1E1E"},
+            "icon": {"color": "#FFA421", "font-size": "18px"},
+            "menu-title": {"font-size": "20px", "font-weight": "bold", "color": "#FFA421"},
+            "nav-link": {
+                "font-size": "16px",
+                "font-weight": "600",
+                "text-align": "center",
+                "background-color": "#FFA421",
+                "color": "#FFFFFF",
+                "border-radius": "10px",
+                "padding": "12px",
+                "box-shadow": "0 4px 10px rgba(0, 0, 0, 0.3)",
+            },
+            "nav-link-selected": {"background-color": "#FF6F00", "font-weight": "700"}
+        }
+    )
+
+    if subpage == "Getting Started 🛠️":
         st.title("🏠 Home - Getting Started")
         st.write("Welcome to the Getting Started guide. This section will help you set up and use the app effectively.")
-    elif selected_subpage == "Overview 🌟":
+    elif subpage == "Overview 🌟":
         st.title("🏠 Home - Overview")
         st.write("Overview of the application, its features, and how it can help you achieve your goals.")
+
 elif selected_page == "📈 Analytics":
-    if selected_subpage == "Charts 📊":
+    subpage = option_menu(
+        menu_title="Analytics Subpages",  
+        options=["Charts 📊", "Insights 🔍"],
+        icons=["chart-bar", "search"],
+        menu_icon="bar-chart",
+        default_index=0,
+        orientation="horizontal"
+    )
+
+    if subpage == "Charts 📊":
         st.title("📈 Analytics - Charts")
         st.write("Explore the charts and analytics related to your data. Visualize trends and insights.")
-    elif selected_subpage == "Insights 🔍":
+    elif subpage == "Insights 🔍":
         st.title("📈 Analytics - Insights")
         st.write("Dive into deeper insights and learn how your data drives decisions.")
+
 elif selected_page == "📂 Reports":
-    if selected_subpage == "Create 📄":
+    subpage = option_menu(
+        menu_title="Reports Subpages",  
+        options=["Create 📄", "Manage 🗂️"],
+        icons=["file-earmark-plus", "folder"],
+        menu_icon="file-earmark-text",
+        default_index=0,
+        orientation="horizontal"
+    )
+
+    if subpage == "Create 📄":
         st.title("📂 Reports - Create")
         st.write("Learn how to create custom reports tailored to your needs.")
-    elif selected_subpage == "Manage 🗂️":
+    elif subpage == "Manage 🗂️":
         st.title("📂 Reports - Manage")
         st.write("Manage and organize your reports in an efficient and effective manner.")
+
 elif selected_page == "⚙️ Settings":
-    if selected_subpage == "Preferences ⚙️":
-        st.title("⚙️ Settings - Preferences")
-        st.write("Adjust your personal preferences and settings to tailor the app to your needs.")
-    elif selected_subpage == "Tools 🔧":
+    subpage = option_menu(
+        menu_title="Settings Subpages",  
+        options=["Profile ⚙️", "Tools 🛠️"],
+        icons=["person", "tools"],
+        menu_icon="gear",
+        default_index=0,
+        orientation="horizontal"
+    )
+
+    if subpage == "Profile ⚙️":
+        st.title("⚙️ Settings - Profile")
+        st.write("Update your profile settings, preferences, and security options.")
+    elif subpage == "Tools 🛠️":
         st.title("⚙️ Settings - Tools")
-        st.write("Explore the various tools available for advanced users and developers.")
+        st.write("Access and manage the various tools available in the app.")
+
 elif selected_page == "📜 About":
-    if selected_subpage == "Credits 📜":
-        st.title("📜 About - Credits")
-        st.write("Acknowledgements and credits for the developers and contributors to this project.")
-    elif selected_subpage == "Features 🌟":
-        st.title("📜 About - Features")
-        st.write("Detailed list of features and functionality available in the app.")
+    st.title("📜 About Us")
+    st.write("Learn more about the team and the purpose of the application.")
 
 
 
