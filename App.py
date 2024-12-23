@@ -14,7 +14,7 @@ st.sidebar.markdown(
     unsafe_allow_html=True,
 )
 
-# Sidebar buttons for navigation
+# Sidebar navigation menu
 menu_options = ["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"]
 selected_page = option_menu(
     menu_title=None,
@@ -39,26 +39,53 @@ selected_page = option_menu(
     },
 )
 
-# Content for each selected sidebar option
-if selected_page == "🏠 Home":
-    st.title("🏠 Home")
-    st.write("Welcome to the Enhanced Demo App! Start exploring the features.")
-elif selected_page == "📈 Analytics":
-    st.title("📈 Analytics")
-    st.write("Analyze your data with charts and insights.")
-elif selected_page == "📂 Reports":
-    st.title("📂 Reports")
-    st.write("Create and manage your reports.")
-elif selected_page == "⚙️ Settings":
-    st.title("⚙️ Settings")
-    st.write("Customize your app settings and preferences.")
-elif selected_page == "📜 About":
-    st.title("📜 About")
-    st.write("Learn more about this application and its features.")
+# Define subpages and tabs for each main page
+subpages = {
+    "🏠 Home": ["Getting Started 🛠️", "Overview 🌟"],
+    "📈 Analytics": ["Charts 📊", "Insights 🔍"],
+    "📂 Reports": ["Create 📄", "Manage 🗂️"],
+    "⚙️ Settings": ["Preferences ⚙️", "Tools 🔧"],
+    "📜 About": ["Credits 📜", "Features 🌟"],
+}
+
+# Apply consistent styles for tabs
+tab_styles = """
+    <style>
+    div[role="tab"] {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 10px;
+        background-color: rgba(255, 164, 33, 0.2);
+        color: white;
+        text-align: center;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    div[role="tab"][aria-selected="true"] {
+        background-color: #FFA421;
+        color: black;
+    }
+    div[role="tab"]:hover {
+        background-color: rgba(255, 164, 33, 0.5);
+    }
+    </style>
+"""
+st.markdown(tab_styles, unsafe_allow_html=True)
+
+# Display tabs based on selected sidebar option
+if selected_page in subpages:
+    selected_tab = st.tabs(subpages[selected_page])
+
+    # Render content for each tab
+    for index, tab in enumerate(subpages[selected_page]):
+        with selected_tab[index]:
+            st.title(f"{selected_page} - {tab}")
+            st.write(f"Content for {tab.lower()}.")
 
 # Footer
 st.sidebar.markdown("---")
 st.sidebar.caption("© 2024 Enhanced Streamlit Demo App. All rights reserved.")
+
 
 
 
