@@ -14,7 +14,7 @@ st.sidebar.markdown(
     unsafe_allow_html=True,
 )
 
-# Sidebar navigation with full-size items
+# Sidebar navigation menu
 menu_options = ["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"]
 selected_page = option_menu(
     menu_title=None,
@@ -39,7 +39,7 @@ selected_page = option_menu(
     },
 )
 
-# Subpages for each page
+# Define subpages and tabs for each main page
 subpages = {
     "🏠 Home": ["Getting Started 🛠️", "Overview 🌟"],
     "📈 Analytics": ["Charts 📊", "Insights 🔍"],
@@ -48,71 +48,43 @@ subpages = {
     "📜 About": ["Credits 📜", "Features 🌟"],
 }
 
-# Display tabs on each page with the same style as the sidebar
-if selected_page in subpages:
-    tabs = st.tabs(subpages[selected_page])
-    tab_styles = """
-        <style>
-        div[role="tab"] {
-            font-size: 18px;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 10px;
-            background-color: rgba(255, 164, 33, 0.2);
-            color: white;
-            text-align: center;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-        }
-        div[role="tab"][aria-selected="true"] {
-            background-color: #FFA421;
-            color: black;
-        }
-        div[role="tab"]:hover {
-            background-color: rgba(255, 164, 33, 0.5);
-        }
-        </style>
-    """
-    st.markdown(tab_styles, unsafe_allow_html=True)
+# Apply consistent styles for tabs
+tab_styles = """
+    <style>
+    div[role="tab"] {
+        font-size: 18px;
+        padding: 10px 20px;
+        margin: 5px;
+        border-radius: 10px;
+        background-color: rgba(255, 164, 33, 0.2);
+        color: white;
+        text-align: center;
+        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+    }
+    div[role="tab"][aria-selected="true"] {
+        background-color: #FFA421;
+        color: black;
+    }
+    div[role="tab"]:hover {
+        background-color: rgba(255, 164, 33, 0.5);
+    }
+    </style>
+"""
+st.markdown(tab_styles, unsafe_allow_html=True)
 
-# Content for each page and subpage
-if selected_page == "🏠 Home":
-    if tabs[0].selected:
-        st.title("🏠 Home - Getting Started")
-        st.write("Details about how to get started.")
-    elif tabs[1].selected:
-        st.title("🏠 Home - Overview")
-        st.write("Overview of the application.")
-elif selected_page == "📈 Analytics":
-    if tabs[0].selected:
-        st.title("📈 Analytics - Charts")
-        st.write("Details about analytics charts.")
-    elif tabs[1].selected:
-        st.title("📈 Analytics - Insights")
-        st.write("Details about analytics insights.")
-elif selected_page == "📂 Reports":
-    if tabs[0].selected:
-        st.title("📂 Reports - Create")
-        st.write("Details about creating reports.")
-    elif tabs[1].selected:
-        st.title("📂 Reports - Manage")
-        st.write("Details about managing reports.")
-elif selected_page == "⚙️ Settings":
-    if tabs[0].selected:
-        st.title("⚙️ Settings - Preferences")
-        st.write("Details about preferences.")
-    elif tabs[1].selected:
-        st.title("⚙️ Settings - Tools")
-        st.write("Details about settings tools.")
-elif selected_page == "📜 About":
-    if tabs[0].selected:
-        st.title("📜 About - Credits")
-        st.write("Details about the app credits.")
-    elif tabs[1].selected:
-        st.title("📜 About - Features")
-        st.write("Details about the app features.")
+# Display tabs based on selected sidebar option
+if selected_page in subpages:
+    selected_tab = st.tabs(subpages[selected_page])
+
+    # Render content for each tab
+    for index, tab in enumerate(subpages[selected_page]):
+        with selected_tab[index]:
+            st.title(f"{selected_page} - {tab}")
+            st.write(f"Content for {tab.lower()}.")
 
 # Footer
 st.sidebar.markdown("---")
 st.sidebar.caption("© 2024 Enhanced Streamlit Demo App. All rights reserved.")
+
 
 
