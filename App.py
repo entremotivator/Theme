@@ -219,23 +219,24 @@ elif selected_page == "📂 Reports":
 elif selected_page == "⚙️ Settings":
     subpage = option_menu(
         menu_title="Settings Subpages",  
-        options=["Preferences ⚙️", "Tools 🔧"],
-        icons=["sliders", "tools"],
+        options=["Profile ⚙️", "Tools 🛠️"],
+        icons=["person", "tools"],
         menu_icon="gear",
         default_index=0,
         orientation="horizontal"
     )
 
-    if subpage == "Preferences ⚙️":
-        st.title("⚙️ Settings - Preferences")
-        st.write("Adjust your personal preferences and settings to tailor the app to your needs.")
-    elif subpage == "Tools 🔧":
+    if subpage == "Profile ⚙️":
+        st.title("⚙️ Settings - Profile")
+        st.write("Update your profile settings, preferences, and security options.")
+    elif subpage == "Tools 🛠️":
         st.title("⚙️ Settings - Tools")
         st.write("Access and manage the various tools available in the app.")
 
 elif selected_page == "📜 About":
     st.title("📜 About Us")
     st.write("Learn more about the team and the purpose of the application.")
+
 
 
 
