@@ -14,11 +14,10 @@ st.sidebar.markdown(
     unsafe_allow_html=True,
 )
 
-# Sidebar navigation menu
-menu_options = ["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"]
+# Sidebar menu for navigation
 selected_page = option_menu(
     menu_title=None,
-    options=menu_options,
+    options=["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"],
     icons=["house", "bar-chart", "folder", "gear", "book"],
     menu_icon="cast",
     default_index=0,
@@ -39,52 +38,66 @@ selected_page = option_menu(
     },
 )
 
-# Define subpages and tabs for each main page
-subpages = {
-    "🏠 Home": ["Getting Started 🛠️", "Overview 🌟"],
-    "📈 Analytics": ["Charts 📊", "Insights 🔍"],
-    "📂 Reports": ["Create 📄", "Manage 🗂️"],
-    "⚙️ Settings": ["Preferences ⚙️", "Tools 🔧"],
-    "📜 About": ["Credits 📜", "Features 🌟"],
-}
+# Subpage tabs for each main menu item
+if selected_page == "🏠 Home":
+    with st.sidebar:
+        st.markdown("### 🏠 Home")
+    tabs = st.tabs(["Getting Started 🛠️", "Overview 🌟"])
+    if tabs[0].selected:
+        st.title("🏠 Home - Getting Started")
+        st.write("Details about how to get started.")
+    elif tabs[1].selected:
+        st.title("🏠 Home - Overview")
+        st.write("Overview of the application.")
 
-# Apply consistent styles for tabs
-tab_styles = """
-    <style>
-    div[role="tab"] {
-        font-size: 18px;
-        padding: 10px 20px;
-        margin: 5px;
-        border-radius: 10px;
-        background-color: rgba(255, 164, 33, 0.2);
-        color: white;
-        text-align: center;
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-    }
-    div[role="tab"][aria-selected="true"] {
-        background-color: #FFA421;
-        color: black;
-    }
-    div[role="tab"]:hover {
-        background-color: rgba(255, 164, 33, 0.5);
-    }
-    </style>
-"""
-st.markdown(tab_styles, unsafe_allow_html=True)
+elif selected_page == "📈 Analytics":
+    with st.sidebar:
+        st.markdown("### 📈 Analytics")
+    tabs = st.tabs(["Charts 📊", "Insights 🔍"])
+    if tabs[0].selected:
+        st.title("📈 Analytics - Charts")
+        st.write("Details about analytics charts.")
+    elif tabs[1].selected:
+        st.title("📈 Analytics - Insights")
+        st.write("Details about analytics insights.")
 
-# Display tabs based on selected sidebar option
-if selected_page in subpages:
-    selected_tab = st.tabs(subpages[selected_page])
+elif selected_page == "📂 Reports":
+    with st.sidebar:
+        st.markdown("### 📂 Reports")
+    tabs = st.tabs(["Create 📄", "Manage 🗂️"])
+    if tabs[0].selected:
+        st.title("📂 Reports - Create")
+        st.write("Details about creating reports.")
+    elif tabs[1].selected:
+        st.title("📂 Reports - Manage")
+        st.write("Details about managing reports.")
 
-    # Render content for each tab
-    for index, tab in enumerate(subpages[selected_page]):
-        with selected_tab[index]:
-            st.title(f"{selected_page} - {tab}")
-            st.write(f"Content for {tab.lower()}.")
+elif selected_page == "⚙️ Settings":
+    with st.sidebar:
+        st.markdown("### ⚙️ Settings")
+    tabs = st.tabs(["Preferences ⚙️", "Tools 🔧"])
+    if tabs[0].selected:
+        st.title("⚙️ Settings - Preferences")
+        st.write("Details about preferences.")
+    elif tabs[1].selected:
+        st.title("⚙️ Settings - Tools")
+        st.write("Details about settings tools.")
+
+elif selected_page == "📜 About":
+    with st.sidebar:
+        st.markdown("### 📜 About")
+    tabs = st.tabs(["Credits 📜", "Features 🌟"])
+    if tabs[0].selected:
+        st.title("📜 About - Credits")
+        st.write("Details about the app credits.")
+    elif tabs[1].selected:
+        st.title("📜 About - Features")
+        st.write("Details about the app features.")
 
 # Footer
 st.sidebar.markdown("---")
 st.sidebar.caption("© 2024 Enhanced Streamlit Demo App. All rights reserved.")
+
 
 
 
