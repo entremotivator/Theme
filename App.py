@@ -1,4 +1,5 @@
 import streamlit as st
+from streamlit.components.v1 import html
 
 # Function to apply the theme and page configuration
 def apply_theme():
@@ -26,10 +27,17 @@ def apply_theme():
 # Call the apply_theme function (ensure this is done only once at the start)
 apply_theme()
 
-# Sidebar with navigation options, styled with CSS
+# Sidebar with logo and navigation options, styled with CSS
 sidebar = st.sidebar
 
-# Custom CSS to style the sidebar buttons and overall layout
+# HTML code for the logo
+sidebar.markdown("""
+    <div style="text-align:center;">
+        <img src="https://your-logo-url.com/logo.png" alt="Demo Logo" width="200"/>
+    </div>
+""", unsafe_allow_html=True)
+
+# Custom CSS to style the sidebar buttons, overall layout, and logo
 sidebar.markdown("""
     <style>
         /* Style the sidebar itself */
@@ -37,6 +45,13 @@ sidebar.markdown("""
             background-color: #282828;  /* Dark background for the sidebar */
             border-radius: 12px;        /* Rounded corners for a sleek look */
             padding: 20px;              /* Add padding around the content */
+        }
+
+        /* Style the logo */
+        .stSidebar img {
+            width: 100%;                /* Make the logo fit the sidebar */
+            max-width: 200px;           /* Limit the logo width */
+            margin-bottom: 30px;        /* Space between logo and sidebar buttons */
         }
 
         /* Style the sidebar heading */
