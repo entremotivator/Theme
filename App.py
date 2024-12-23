@@ -1,8 +1,25 @@
 import streamlit as st
 from streamlit_option_menu import option_menu  # Install: pip install streamlit-option-menu
 
-# Configure the page
-st.set_page_config(page_title="Enhanced Streamlit Demo", page_icon="🌟", layout="wide")
+# Function to apply the selected theme
+def apply_theme():
+    st.set_page_config(
+        page_title="Enhanced Streamlit Demo",
+        page_icon="🌟",
+        layout="wide",
+        initial_sidebar_state="expanded",
+        theme={
+            "base": "dark",
+            "primaryColor": "#FFA421",
+            "backgroundColor": "#1E1E1E",
+            "secondaryBackgroundColor": "#282828",
+            "textColor": "#FFFFFF",
+            "font": "sans serif"
+        }
+    )
+
+# Configure the page with default theme
+apply_theme()
 
 # Sidebar header with shadow box style
 st.sidebar.markdown(
@@ -14,7 +31,7 @@ st.sidebar.markdown(
     unsafe_allow_html=True,
 )
 
-# Sidebar navigation with full-size items
+# Sidebar navigation with main pages
 menu_options = ["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"]
 selected_page = option_menu(
     menu_title=None,
@@ -37,10 +54,9 @@ selected_page = option_menu(
         },
         "nav-link-selected": {"background-color": "#FFA421", "color": "black"},
     },
-    key="sidebar_menu",  # Add a key to prevent conflicts
 )
 
-# Subpages for each page
+# Subpages for each main page in the sidebar
 subpages = {
     "🏠 Home": ["Getting Started 🛠️", "Overview 🌟"],
     "📈 Analytics": ["Charts 📊", "Insights 🔍"],
@@ -49,72 +65,59 @@ subpages = {
     "📜 About": ["Credits 📜", "Features 🌟"],
 }
 
-# Display tabs on each page with the same style as the sidebar
+# Show subpage buttons in the sidebar based on selected main page
 if selected_page in subpages:
-    tabs = st.tabs(subpages[selected_page])
-    tab_styles = """
-        <style>
-        div[role="tab"] {
-            font-size: 18px;
-            padding: 10px 20px;
-            margin: 5px;
-            border-radius: 10px;
-            background-color: rgba(255, 164, 33, 0.2);
-            color: white;
-            text-align: center;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
-        }
-        div[role="tab"][aria-selected="true"] {
-            background-color: #FFA421;
-            color: black;
-        }
-        div[role="tab"]:hover {
-            background-color: rgba(255, 164, 33, 0.5);
-        }
-        </style>
-    """
-    st.markdown(tab_styles, unsafe_allow_html=True)
+    for subpage in subpages[selected_page]:
+        if st.sidebar.button(subpage):
+            selected_subpage = subpage
+            break
 
-# Content for each page and subpage
+# Add Settings Button in Sidebar
+if st.sidebar.button("Update Theme"):
+    apply_theme()  # Re-apply the theme configuration when button is pressed
+    st.sidebar.success("Theme updated!")
+
+# Display content based on selected subpage
 if selected_page == "🏠 Home":
-    if tabs[0].selected:
+    if selected_subpage == "Getting Started 🛠️":
         st.title("🏠 Home - Getting Started")
         st.write("Details about how to get started.")
-    elif tabs[1].selected:
+    elif selected_subpage == "Overview 🌟":
         st.title("🏠 Home - Overview")
         st.write("Overview of the application.")
 elif selected_page == "📈 Analytics":
-    if tabs[0].selected:
+    if selected_subpage == "Charts 📊":
         st.title("📈 Analytics - Charts")
         st.write("Details about analytics charts.")
-    elif tabs[1].selected:
+    elif selected_subpage == "Insights 🔍":
         st.title("📈 Analytics - Insights")
         st.write("Details about analytics insights.")
 elif selected_page == "📂 Reports":
-    if tabs[0].selected:
+    if selected_subpage == "Create 📄":
         st.title("📂 Reports - Create")
         st.write("Details about creating reports.")
-    elif tabs[1].selected:
+    elif selected_subpage == "Manage 🗂️":
         st.title("📂 Reports - Manage")
         st.write("Details about managing reports.")
 elif selected_page == "⚙️ Settings":
-    if tabs[0].selected:
+    if selected_subpage == "Preferences ⚙️":
         st.title("⚙️ Settings - Preferences")
         st.write("Details about preferences.")
-    elif tabs[1].selected:
+    elif selected_subpage == "Tools 🔧":
         st.title("⚙️ Settings - Tools")
         st.write("Details about settings tools.")
 elif selected_page == "📜 About":
-    if tabs[0].selected:
+    if selected_subpage == "Credits 📜":
         st.title("📜 About - Credits")
         st.write("Details about the app credits.")
-    elif tabs[1].selected:
+    elif selected_subpage == "Features 🌟":
         st.title("📜 About - Features")
         st.write("Details about the app features.")
 
 # Footer
 st.sidebar.markdown("---")
 st.sidebar.caption("© 2024 Enhanced Streamlit Demo App. All rights reserved.")
+
 
 
 
