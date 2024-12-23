@@ -26,11 +26,43 @@ def apply_theme():
 # Call the apply_theme function (ensure this is done only once at the start)
 apply_theme()
 
-# Sidebar with navigation options
+# Sidebar with navigation options, styled with CSS
 sidebar = st.sidebar
+
+# Custom CSS to style the sidebar buttons
+sidebar.markdown("""
+    <style>
+        .stSidebar .css-1d391kg {
+            border: none;
+            background-color: #1E1E1E;
+        }
+        .stSidebar .st-bd {
+            border-radius: 8px;
+        }
+        .stSidebar .stRadio label {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            background-color: #FFA421;
+            color: #FFFFFF;
+            padding: 10px;
+            border-radius: 10px;
+            width: 250px;
+            margin: 5px auto;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            cursor: pointer;
+        }
+        .stSidebar .stRadio label:hover {
+            background-color: #FF6F00;
+        }
+    </style>
+""", unsafe_allow_html=True)
+
+# Sidebar navigation
 selected_page = sidebar.radio(
     "Select a page", 
-    ["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"]
+    ["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"],
+    label_visibility="collapsed"
 )
 
 # Dictionary to hold subpages for each page
@@ -45,7 +77,8 @@ subpages = {
 # Sidebar subpage selection
 selected_subpage = sidebar.radio(
     "Select a subpage", 
-    subpages[selected_page]
+    subpages[selected_page],
+    label_visibility="collapsed"
 )
 
 # Content display based on the selected page and subpage
@@ -84,6 +117,7 @@ elif selected_page == "📜 About":
     elif selected_subpage == "Features 🌟":
         st.title("📜 About - Features")
         st.write("Details about the app features.")
+
 
 
 
