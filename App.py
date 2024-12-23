@@ -1,88 +1,46 @@
 import streamlit as st
+from streamlit_option_menu import option_menu  # Install: pip install streamlit-option-menu
 
-# Sidebar header
+# Configure the page
+st.set_page_config(page_title="Streamlit Demo", page_icon="🌟", layout="wide")
+
+# Sidebar header with shadow box style
 st.sidebar.markdown(
     """
-    <div style="background-color:#FFA421; padding: 15px; border-radius: 5px; text-align: center;">
+    <div style="background-color: #FFA421; padding: 15px; border-radius: 10px; text-align: center; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);">
         <h2 style="color: white; margin: 0;">🌟 Streamlit Demo</h2>
     </div>
     """,
     unsafe_allow_html=True,
 )
 
-# Define main menu items (pages) and their descriptions
-menu = {
-    "🏠 Home": "Welcome to the home page. Explore the app features here.",
-    "📈 Analytics": "Dive into data analytics and visualizations.",
-    "📂 Reports": "Generate and manage reports for your projects.",
-    "⚙️ Settings": "Configure your preferences and tools.",
-    "📜 About": "Learn more about this Streamlit app and its features."
-}
-
-# Sidebar navigation
-selected_page = st.sidebar.radio(
-    "Navigation", 
-    list(menu.keys()), 
-    key="main_menu",
-    format_func=lambda x: f"🔘 {x}",
-    help="Choose a page to explore."
+# Sidebar navigation with full-size items
+menu_options = ["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"]
+selected_page = option_menu(
+    menu_title=None,
+    options=menu_options,
+    icons=["house", "bar-chart", "folder", "gear", "book"],
+    menu_icon="cast",
+    default_index=0,
+    orientation="vertical",
+    styles={
+        "container": {"padding": "5px", "background-color": "#282828"},
+        "icon": {"color": "#FFA421", "font-size": "25px"},
+        "nav-link": {
+            "font-size": "18px",
+            "text-align": "center",
+            "margin": "10px 0",
+            "border-radius": "10px",
+            "padding": "10px",
+            "background-color": "rgba(255, 164, 33, 0.2)",
+            "color": "#FFFFFF",
+        },
+        "nav-link-selected": {"background-color": "#FFA421", "color": "black"},
+    },
 )
 
-# Make sidebar buttons look more interactive
-st.sidebar.markdown(
-    """
-    <style>
-    .stRadio > label {
-        display: flex;
-        justify-content: center;
-        font-weight: bold;
-        font-size: 18px;
-        color: #FFA421;
-        text-align: center;
-        margin: 10px 0;
-    }
-    .stRadio > div > label:hover {
-        background-color: #FFA421;
-        color: black !important;
-        border-radius: 10px;
-        padding: 5px;
-        cursor: pointer;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Horizontal menu for sub-pages
-st.markdown(
-    """
-    <style>
-    .horizontal-menu {
-        display: flex;
-        justify-content: center;
-        gap: 30px;
-        margin: 20px 0;
-    }
-    .horizontal-menu a {
-        color: #FFA421;
-        text-decoration: none;
-        font-size: 18px;
-        font-weight: bold;
-        padding: 5px 10px;
-        border: 2px solid #FFA421;
-        border-radius: 5px;
-    }
-    .horizontal-menu a:hover {
-        background-color: #FFA421;
-        color: black !important;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
-# Sub-pages for the current page
-sub_pages = {
+# Subpages for each page
+subpages = {
     "🏠 Home": ["Getting Started 🛠️", "Overview 🌟"],
     "📈 Analytics": ["Charts 📊", "Insights 🔍"],
     "📂 Reports": ["Create 📄", "Manage 🗂️"],
@@ -90,18 +48,48 @@ sub_pages = {
     "📜 About": ["Credits 📜", "Features 🌟"],
 }
 
-st.markdown('<div class="horizontal-menu">' + ''.join(
-    f'<a href="#">{sub_page}</a>' for sub_page in sub_pages[selected_page]
-) + '</div>', unsafe_allow_html=True)
+# Horizontal tabs for subpages
+if selected_page in subpages:
+    selected_subpage = st.tabs(subpages[selected_page])
 
-# Page Content
-st.title(selected_page)
-st.write(menu[selected_page])  # Display the page description
-
-for sub_page in sub_pages[selected_page]:
-    st.subheader(sub_page)
-    st.write(f"Details about {sub_page} go here.")
+# Content for each page and subpage
+if selected_page == "🏠 Home":
+    if selected_subpage == "Getting Started 🛠️":
+        st.title("🏠 Home - Getting Started")
+        st.write("Details about how to get started.")
+    elif selected_subpage == "Overview 🌟":
+        st.title("🏠 Home - Overview")
+        st.write("Overview of the application.")
+elif selected_page == "📈 Analytics":
+    if selected_subpage == "Charts 📊":
+        st.title("📈 Analytics - Charts")
+        st.write("Details about analytics charts.")
+    elif selected_subpage == "Insights 🔍":
+        st.title("📈 Analytics - Insights")
+        st.write("Details about analytics insights.")
+elif selected_page == "📂 Reports":
+    if selected_subpage == "Create 📄":
+        st.title("📂 Reports - Create")
+        st.write("Details about creating reports.")
+    elif selected_subpage == "Manage 🗂️":
+        st.title("📂 Reports - Manage")
+        st.write("Details about managing reports.")
+elif selected_page == "⚙️ Settings":
+    if selected_subpage == "Preferences ⚙️":
+        st.title("⚙️ Settings - Preferences")
+        st.write("Details about preferences.")
+    elif selected_subpage == "Tools 🔧":
+        st.title("⚙️ Settings - Tools")
+        st.write("Details about settings tools.")
+elif selected_page == "📜 About":
+    if selected_subpage == "Credits 📜":
+        st.title("📜 About - Credits")
+        st.write("Details about the app credits.")
+    elif selected_subpage == "Features 🌟":
+        st.title("📜 About - Features")
+        st.write("Details about the app features.")
 
 # Footer
 st.sidebar.markdown("---")
 st.sidebar.caption("© 2024 Streamlit Demo App. All rights reserved.")
+
