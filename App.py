@@ -2,13 +2,13 @@ import streamlit as st
 from streamlit_option_menu import option_menu  # Install: pip install streamlit-option-menu
 
 # Configure the page
-st.set_page_config(page_title="Streamlit Demo", page_icon="🌟", layout="wide")
+st.set_page_config(page_title="Enhanced Streamlit Demo", page_icon="🌟", layout="wide")
 
 # Sidebar header with shadow box style
 st.sidebar.markdown(
     """
     <div style="background-color: #FFA421; padding: 15px; border-radius: 10px; text-align: center; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);">
-        <h2 style="color: white; margin: 0;">🌟 Streamlit Demo</h2>
+        <h2 style="color: white; margin: 0;">🌟 Enhanced Demo</h2>
     </div>
     """,
     unsafe_allow_html=True,
@@ -31,7 +31,7 @@ selected_page = option_menu(
             "text-align": "center",
             "margin": "10px 0",
             "border-radius": "10px",
-            "padding": "10px",
+            "padding": "15px",
             "background-color": "rgba(255, 164, 33, 0.2)",
             "color": "#FFFFFF",
         },
@@ -48,48 +48,71 @@ subpages = {
     "📜 About": ["Credits 📜", "Features 🌟"],
 }
 
-# Horizontal tabs for subpages
+# Display tabs on each page with the same style as the sidebar
 if selected_page in subpages:
-    selected_subpage = st.tabs(subpages[selected_page])
+    tabs = st.tabs(subpages[selected_page])
+    tab_styles = """
+        <style>
+        div[role="tab"] {
+            font-size: 18px;
+            padding: 10px 20px;
+            margin: 5px;
+            border-radius: 10px;
+            background-color: rgba(255, 164, 33, 0.2);
+            color: white;
+            text-align: center;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+        }
+        div[role="tab"][aria-selected="true"] {
+            background-color: #FFA421;
+            color: black;
+        }
+        div[role="tab"]:hover {
+            background-color: rgba(255, 164, 33, 0.5);
+        }
+        </style>
+    """
+    st.markdown(tab_styles, unsafe_allow_html=True)
 
 # Content for each page and subpage
 if selected_page == "🏠 Home":
-    if selected_subpage == "Getting Started 🛠️":
+    if tabs[0].selected:
         st.title("🏠 Home - Getting Started")
         st.write("Details about how to get started.")
-    elif selected_subpage == "Overview 🌟":
+    elif tabs[1].selected:
         st.title("🏠 Home - Overview")
         st.write("Overview of the application.")
 elif selected_page == "📈 Analytics":
-    if selected_subpage == "Charts 📊":
+    if tabs[0].selected:
         st.title("📈 Analytics - Charts")
         st.write("Details about analytics charts.")
-    elif selected_subpage == "Insights 🔍":
+    elif tabs[1].selected:
         st.title("📈 Analytics - Insights")
         st.write("Details about analytics insights.")
 elif selected_page == "📂 Reports":
-    if selected_subpage == "Create 📄":
+    if tabs[0].selected:
         st.title("📂 Reports - Create")
         st.write("Details about creating reports.")
-    elif selected_subpage == "Manage 🗂️":
+    elif tabs[1].selected:
         st.title("📂 Reports - Manage")
         st.write("Details about managing reports.")
 elif selected_page == "⚙️ Settings":
-    if selected_subpage == "Preferences ⚙️":
+    if tabs[0].selected:
         st.title("⚙️ Settings - Preferences")
         st.write("Details about preferences.")
-    elif selected_subpage == "Tools 🔧":
+    elif tabs[1].selected:
         st.title("⚙️ Settings - Tools")
         st.write("Details about settings tools.")
 elif selected_page == "📜 About":
-    if selected_subpage == "Credits 📜":
+    if tabs[0].selected:
         st.title("📜 About - Credits")
         st.write("Details about the app credits.")
-    elif selected_subpage == "Features 🌟":
+    elif tabs[1].selected:
         st.title("📜 About - Features")
         st.write("Details about the app features.")
 
 # Footer
 st.sidebar.markdown("---")
-st.sidebar.caption("© 2024 Streamlit Demo App. All rights reserved.")
+st.sidebar.caption("© 2024 Enhanced Streamlit Demo App. All rights reserved.")
+
 
