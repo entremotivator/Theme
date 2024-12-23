@@ -1,65 +1,107 @@
 import streamlit as st
 
-# Set up sidebar
+# Sidebar header
 st.sidebar.markdown(
     """
-    <div style="background-color:#FFA421; padding: 10px; border-radius: 5px; text-align: center;">
-        <h1 style="color: white;">🌟 Streamlit Demo</h1>
+    <div style="background-color:#FFA421; padding: 15px; border-radius: 5px; text-align: center;">
+        <h2 style="color: white; margin: 0;">🌟 Streamlit Demo</h2>
     </div>
     """,
     unsafe_allow_html=True,
 )
 
-# Define pages and subpages
-pages = {
-    "Page 1 🏠": ["Subpage 1.1 🌟", "Subpage 1.2 ✨"],
-    "Page 2 📈": ["Subpage 2.1 🔍", "Subpage 2.2 📊"],
-    "Page 3 📂": ["Subpage 3.1 🗂️", "Subpage 3.2 📁"],
-    "Page 4 ⚙️": ["Subpage 4.1 🛠️", "Subpage 4.2 🔧"],
-    "Page 5 📜": ["Subpage 5.1 📝", "Subpage 5.2 📚"],
+# Define main menu items (pages) and their descriptions
+menu = {
+    "🏠 Home": "Welcome to the home page. Explore the app features here.",
+    "📈 Analytics": "Dive into data analytics and visualizations.",
+    "📂 Reports": "Generate and manage reports for your projects.",
+    "⚙️ Settings": "Configure your preferences and tools.",
+    "📜 About": "Learn more about this Streamlit app and its features."
 }
 
-# Sidebar full menu
-st.sidebar.title("Full Menu")
-for page, subpages in pages.items():
-    with st.sidebar.expander(page):
-        for subpage in subpages:
-            st.write(subpage)
+# Sidebar navigation
+selected_page = st.sidebar.radio(
+    "Navigation", 
+    list(menu.keys()), 
+    key="main_menu",
+    format_func=lambda x: f"🔘 {x}",
+    help="Choose a page to explore."
+)
 
-# Horizontal menu for each page
-st.write(
+# Make sidebar buttons look more interactive
+st.sidebar.markdown(
     """
     <style>
-    .horizontal-menu {
+    .stRadio > label {
         display: flex;
         justify-content: center;
-        gap: 20px;
-        margin-bottom: 20px;
-    }
-    .horizontal-menu a {
-        color: #FFA421;
-        text-decoration: none;
         font-weight: bold;
         font-size: 18px;
+        color: #FFA421;
+        text-align: center;
+        margin: 10px 0;
+    }
+    .stRadio > div > label:hover {
+        background-color: #FFA421;
+        color: black !important;
+        border-radius: 10px;
+        padding: 5px;
+        cursor: pointer;
     }
     </style>
     """,
     unsafe_allow_html=True,
 )
 
-# Define the main app layout
-page_selected = st.sidebar.selectbox("Choose a Page", list(pages.keys()))
+# Horizontal menu for sub-pages
+st.markdown(
+    """
+    <style>
+    .horizontal-menu {
+        display: flex;
+        justify-content: center;
+        gap: 30px;
+        margin: 20px 0;
+    }
+    .horizontal-menu a {
+        color: #FFA421;
+        text-decoration: none;
+        font-size: 18px;
+        font-weight: bold;
+        padding: 5px 10px;
+        border: 2px solid #FFA421;
+        border-radius: 5px;
+    }
+    .horizontal-menu a:hover {
+        background-color: #FFA421;
+        color: black !important;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 
-# Display horizontal menu for the selected page
-if page_selected in pages:
-    subpages = pages[page_selected]
-    st.markdown('<div class="horizontal-menu">' + ''.join(
-        f'<a href="#">{subpage}</a>' for subpage in subpages
-    ) + '</div>', unsafe_allow_html=True)
+# Sub-pages for the current page
+sub_pages = {
+    "🏠 Home": ["Getting Started 🛠️", "Overview 🌟"],
+    "📈 Analytics": ["Charts 📊", "Insights 🔍"],
+    "📂 Reports": ["Create 📄", "Manage 🗂️"],
+    "⚙️ Settings": ["Preferences ⚙️", "Tools 🔧"],
+    "📜 About": ["Credits 📜", "Features 🌟"],
+}
 
-    # Page content
-    st.title(page_selected)
-    st.write(f"You are on {page_selected}.")
-    for subpage in subpages:
-        st.subheader(subpage)
-        st.write(f"Details about {subpage} go here.")
+st.markdown('<div class="horizontal-menu">' + ''.join(
+    f'<a href="#">{sub_page}</a>' for sub_page in sub_pages[selected_page]
+) + '</div>', unsafe_allow_html=True)
+
+# Page Content
+st.title(selected_page)
+st.write(menu[selected_page])  # Display the page description
+
+for sub_page in sub_pages[selected_page]:
+    st.subheader(sub_page)
+    st.write(f"Details about {sub_page} go here.")
+
+# Footer
+st.sidebar.markdown("---")
+st.sidebar.caption("© 2024 Streamlit Demo App. All rights reserved.")
