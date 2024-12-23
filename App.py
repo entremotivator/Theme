@@ -1,83 +1,54 @@
 import streamlit as st
-from streamlit_option_menu import option_menu  # Install: pip install streamlit-option-menu
 
-# Function to apply the selected theme
+# Function to apply the theme and page configuration
 def apply_theme():
-    st.set_page_config(
-        page_title="Enhanced Streamlit Demo",
-        page_icon="🌟",
-        layout="wide",
-        initial_sidebar_state="expanded",
-        theme={
-            "base": "dark",
-            "primaryColor": "#FFA421",
-            "backgroundColor": "#1E1E1E",
-            "secondaryBackgroundColor": "#282828",
-            "textColor": "#FFFFFF",
-            "font": "sans serif"
-        }
-    )
+    try:
+        # Set the page configuration only once
+        st.set_page_config(
+            page_title="Enhanced Streamlit Demo",   # Set the page title
+            page_icon="🌟",                        # Set the page icon
+            layout="wide",                         # Set the layout to wide
+            initial_sidebar_state="expanded",      # Expand the sidebar by default
+            theme={
+                "base": "dark",                  # Use dark theme
+                "primaryColor": "#FFA421",      # Set the primary color
+                "backgroundColor": "#1E1E1E",   # Set the background color
+                "secondaryBackgroundColor": "#282828",  # Set the secondary background color
+                "textColor": "#FFFFFF",         # Set the text color to white
+                "font": "sans serif"            # Set the font to sans-serif
+            }
+        )
+        print("Page configuration applied successfully.")
+    except Exception as e:
+        print(f"Error setting page config: {e}")
+        # Handle or log error as needed
 
-# Configure the page with default theme
+# Call the apply_theme function (ensure this is done only once at the start)
 apply_theme()
 
-# Sidebar header with shadow box style
-st.sidebar.markdown(
-    """
-    <div style="background-color: #FFA421; padding: 15px; border-radius: 10px; text-align: center; box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);">
-        <h2 style="color: white; margin: 0;">🌟 Enhanced Demo</h2>
-    </div>
-    """,
-    unsafe_allow_html=True,
+# Sidebar with navigation options
+sidebar = st.sidebar
+selected_page = sidebar.radio(
+    "Select a page", 
+    ["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"]
 )
 
-# Sidebar navigation with main pages
-menu_options = ["🏠 Home", "📈 Analytics", "📂 Reports", "⚙️ Settings", "📜 About"]
-selected_page = option_menu(
-    menu_title=None,
-    options=menu_options,
-    icons=["house", "bar-chart", "folder", "gear", "book"],
-    menu_icon="cast",
-    default_index=0,
-    orientation="vertical",
-    styles={
-        "container": {"padding": "5px", "background-color": "#282828"},
-        "icon": {"color": "#FFA421", "font-size": "25px"},
-        "nav-link": {
-            "font-size": "18px",
-            "text-align": "center",
-            "margin": "10px 0",
-            "border-radius": "10px",
-            "padding": "15px",
-            "background-color": "rgba(255, 164, 33, 0.2)",
-            "color": "#FFFFFF",
-        },
-        "nav-link-selected": {"background-color": "#FFA421", "color": "black"},
-    },
-)
-
-# Subpages for each main page in the sidebar
+# Dictionary to hold subpages for each page
 subpages = {
     "🏠 Home": ["Getting Started 🛠️", "Overview 🌟"],
     "📈 Analytics": ["Charts 📊", "Insights 🔍"],
     "📂 Reports": ["Create 📄", "Manage 🗂️"],
     "⚙️ Settings": ["Preferences ⚙️", "Tools 🔧"],
-    "📜 About": ["Credits 📜", "Features 🌟"],
+    "📜 About": ["Credits 📜", "Features 🌟"]
 }
 
-# Show subpage buttons in the sidebar based on selected main page
-if selected_page in subpages:
-    for subpage in subpages[selected_page]:
-        if st.sidebar.button(subpage):
-            selected_subpage = subpage
-            break
+# Sidebar subpage selection
+selected_subpage = sidebar.radio(
+    "Select a subpage", 
+    subpages[selected_page]
+)
 
-# Add Settings Button in Sidebar
-if st.sidebar.button("Update Theme"):
-    apply_theme()  # Re-apply the theme configuration when button is pressed
-    st.sidebar.success("Theme updated!")
-
-# Display content based on selected subpage
+# Content display based on the selected page and subpage
 if selected_page == "🏠 Home":
     if selected_subpage == "Getting Started 🛠️":
         st.title("🏠 Home - Getting Started")
@@ -114,9 +85,7 @@ elif selected_page == "📜 About":
         st.title("📜 About - Features")
         st.write("Details about the app features.")
 
-# Footer
-st.sidebar.markdown("---")
-st.sidebar.caption("© 2024 Enhanced Streamlit Demo App. All rights reserved.")
+
 
 
 
